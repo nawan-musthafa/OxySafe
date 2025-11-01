@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
     <style>
+		
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +36,7 @@ p{
 
         /* Header & Navigation */
         header {
-            background: rgba(26, 26, 46, 0.95);
+            background: rgba(0, 0, 0, 0.25);
             color: white;
             padding: 1rem 2rem;
             position: fixed;
@@ -43,7 +44,7 @@ p{
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(3px);
             transition: all 0.3s ease;
         }
 
@@ -128,20 +129,22 @@ p{
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 18rem 2rem 10rem;
+            padding: 20rem 2rem 10rem;
             text-align: center;
             position: relative;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            
         }
 
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
+            margin-top:10rem;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s ease 0.5s forwards;
@@ -711,7 +714,7 @@ p{
         }
     </style>
 </head>
-<body>Advanced multi-sensor threat detection with automated response protocols for comprehensive vehicle safety
+<body>
     <!-- Header & Navigation -->
     <header>
         <nav class="navbar">
@@ -914,88 +917,635 @@ p{
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+     // Enhanced JavaScript for Oxysafe Website
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all animations and effects
+    initSmoothScrolling();
+    initNavbarEffects();
+    initScrollAnimations();
+    initButtonInteractions();
+    initParallaxEffects();
+    initTypewriterEffect();
+    initCounterAnimations();
+    initFloatingElements();
+    initParticleEffects();
+    fixHeroSectionPadding();
+});
+
+// Smooth scrolling with easing - FIXED HOME LINK
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#home') {
+                // For home link, scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                const target = document.querySelector(targetId);
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const header = document.querySelector('header');
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
                 }
-            });
-        });
-
-        // Navbar background change on scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(26, 26, 46, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = 'rgba(26, 26, 46, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
             }
         });
+    });
+}
 
-        // Animation on scroll
-        function checkScroll() {
-            const elements = document.querySelectorAll('.feature-card, .tech-item, .team-member, .step');
-            
-            elements.forEach((element, index) => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    setTimeout(() => {
-                        element.classList.add('animate');
-                    }, index * 200);
-                }
-            });
+// Advanced navbar effects
+function initNavbarEffects() {
+    const header = document.querySelector('header');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        
+        // Background and blur effect
+        if (scrollY > 100) {
+            header.style.background = 'rgba(26, 26, 46, 0.95)';
+            header.style.backdropFilter = 'blur(15px)';
+            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+        } else {
+            header.style.background = 'rgba(0, 0, 0, 0.25)';
+            header.style.backdropFilter = 'blur(3px)';
+            header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
         }
 
-        // Set initial state for animated elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check scroll position on load
-            checkScroll();
+        // Hide/show navbar on scroll
+        if (scrollY > lastScrollY && scrollY > 200) {
+            header.style.transform = 'translateY(-100%)';
+            header.style.transition = 'transform 0.3s ease';
+        } else {
+            header.style.transform = 'translateY(0)';
+            header.style.transition = 'transform 0.3s ease';
+        }
+        
+        lastScrollY = scrollY;
+    });
+}
+
+// Fix hero section padding issue
+function fixHeroSectionPadding() {
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.hero');
+    const features = document.querySelector('.features');
+    
+    if (header && hero && features) {
+        // Calculate the correct padding to prevent overlap
+        const headerHeight = header.offsetHeight;
+        const heroHeight = hero.offsetHeight;
+        
+        // Add scroll margin to features section for smooth scrolling
+        features.style.scrollMarginTop = headerHeight + 'px';
+        
+        // Adjust hero padding to account for fixed header
+        hero.style.paddingTop = (headerHeight + 40) + 'px';
+        hero.style.minHeight = `calc(100vh - ${headerHeight}px)`;
+        
+        // Add padding to all sections for better spacing
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            if (section.id !== 'home') {
+                section.style.scrollMarginTop = headerHeight + 20 + 'px';
+            }
+        });
+    }
+}
+
+// Advanced scroll animations with Intersection Observer
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                
+                // Add different animation classes based on element type
+                if (element.classList.contains('feature-card')) {
+                    element.style.animation = 'slideUpFadeIn 0.8s ease forwards';
+                    element.style.animationDelay = (Math.random() * 0.3) + 's';
+                } else if (element.classList.contains('tech-item')) {
+                    element.style.animation = 'scaleIn 0.6s ease forwards';
+                    element.style.animationDelay = (Math.random() * 0.2) + 's';
+                } else if (element.classList.contains('team-member')) {
+                    element.style.animation = 'slideInLeft 0.8s ease forwards';
+                } else if (element.classList.contains('step')) {
+                    element.style.animation = 'bounceIn 1s ease forwards';
+                } else if (element.classList.contains('section-title')) {
+                    element.style.animation = 'fadeInUp 1s ease forwards';
+                }
+                
+                // Add glow effect on hover for cards
+                if (element.classList.contains('feature-card') || 
+                    element.classList.contains('tech-item') || 
+                    element.classList.contains('team-member')) {
+                    element.addEventListener('mouseenter', function() {
+                        this.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.3), 0 0 0 1px rgba(0, 102, 204, 0.1)';
+                        this.style.transform = 'translateY(-10px) scale(1.02)';
+                    });
+                    
+                    element.addEventListener('mouseleave', function() {
+                        this.style.boxShadow = '';
+                        this.style.transform = '';
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe all animated elements
+    const animatedElements = document.querySelectorAll('.feature-card, .tech-item, .team-member, .step, .section-title');
+    animatedElements.forEach(el => observer.observe(el));
+}
+
+// Enhanced button interactions
+function initButtonInteractions() {
+    const buttons = document.querySelectorAll('.cta-button, .btn-primary, .btn-secondary');
+    
+    buttons.forEach(button => {
+        // Ripple effect
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
         });
 
-        // Listen for scroll events
-        window.addEventListener('scroll', checkScroll);
-
-        // Pre-order button functionality
-        document.querySelectorAll('.cta-button, .btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in Oxysafe! Our pre-order system will be available soon.');
-            });
+        // Magnetic button effect
+        button.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const angleX = (y - centerY) / 10;
+            const angleY = (centerX - x) / 10;
+            
+            this.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.05)`;
         });
 
-        // Demo button functionality
-        document.querySelector('.btn-secondary').addEventListener('click', function() {
-            alert('The Oxysafe demo video will open in a new window. Coming soon!');
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
         });
 
-        // Add intersection observer for more precise animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+        // Click handlers
+        button.addEventListener('click', function() {
+            if (this.classList.contains('cta-button') || this.classList.contains('btn-primary')) {
+                showPreOrderModal();
+            } else if (this.classList.contains('btn-secondary')) {
+                showDemoModal();
+            }
+        });
+    });
+}
+
+// Parallax effects for hero section
+function initParallaxEffects() {
+    const hero = document.querySelector('.hero');
+    
+    if (hero) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.5;
+            
+            hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+        });
+    }
+}
+
+// Typewriter effect for hero description
+function initTypewriterEffect() {
+    const heroDescription = document.querySelector('.hero p');
+    if (!heroDescription) return;
+
+    const text = heroDescription.textContent;
+    heroDescription.textContent = '';
+    let i = 0;
+    
+    function typeWriter() {
+        if (i < text.length) {
+            heroDescription.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        }
+    }
+    
+    // Start typewriter after hero animation
+    setTimeout(typeWriter, 2000);
+}
+
+// Animated counters for statistics
+function initCounterAnimations() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.ceil(current);
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target;
+            }
         };
-
-        const observer = new IntersectionObserver(function(entries) {
+        
+        // Start counter when element is in view
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                    updateCounter();
+                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const elementsToAnimate = document.querySelectorAll('.feature-card, .tech-item, .team-member, .step');
-            elementsToAnimate.forEach(el => observer.observe(el));
         });
+        
+        observer.observe(counter);
+    });
+}
+
+// Floating elements animation
+function initFloatingElements() {
+    const floatingElements = document.querySelectorAll('.floating-element');
+    
+    floatingElements.forEach((element, index) => {
+        // Random floating animation
+        const duration = 3 + Math.random() * 2;
+        const delay = index * 0.5;
+        
+        element.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+    });
+}
+
+// Particle background effect
+function initParticleEffects() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '1';
+    hero.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.color = `rgba(0, 204, 136, ${Math.random() * 0.3})`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+            if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < 30; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        requestAnimationFrame(animateParticles);
+    }
+
+    resizeCanvas();
+    initParticles();
+    animateParticles();
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initParticles();
+    });
+}
+
+// Modal functions
+function showPreOrderModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Pre-Order Oxysafe</h3>
+            <p>Thank you for your interest in Oxysafe! Our pre-order system will be available soon.</p>
+            <p>Leave your email to be notified when we launch:</p>
+            <form class="pre-order-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Notify Me</button>
+            </form>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        modal.remove();
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+    
+    // Form submission
+    modal.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = modal.querySelector('input').value;
+        alert(`Thank you! We'll notify you at ${email} when Oxysafe is available for pre-order.`);
+        modal.remove();
+    });
+}
+
+function showDemoModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Oxysafe Demo</h3>
+            <p>The Oxysafe demo video will be available soon!</p>
+            <div class="demo-placeholder">
+                <i class="fas fa-play-circle"></i>
+                <p>Demo Video Coming Soon</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        modal.remove();
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Add CSS for new effects
+const style = document.createElement('style');
+style.textContent = `
+    /* Enhanced animations */
+    @keyframes slideUpFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        70% {
+            transform: scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    /* Ripple effect */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+    }
+    
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    /* Modal styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        backdrop-filter: blur(10px);
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        animation: scaleIn 0.3s ease;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s;
+    }
+    
+    .close-modal:hover {
+        color: #ff4444;
+    }
+    
+    .pre-order-form {
+        margin-top: 1rem;
+    }
+    
+    .pre-order-form input {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+    
+    .pre-order-form button {
+        width: 100%;
+        padding: 1rem;
+        background: #0066cc;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    
+    .pre-order-form button:hover {
+        background: #004499;
+    }
+    
+    .demo-placeholder {
+        text-align: center;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 1rem;
+    }
+    
+    .demo-placeholder i {
+        font-size: 4rem;
+        color: #0066cc;
+        margin-bottom: 1rem;
+    }
+    
+    /* Enhanced hover effects */
+    .feature-card, .tech-item, .team-member {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+    
+    /* Floating animation for decorative elements */
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-20px) rotate(180deg);
+        }
+    }
+    
+    /* Fix for hero section and features spacing */
+    .hero {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .features {
+        position: relative;
+        z-index: 3;
+    }
+    
+    /* Ensure proper spacing after fixed header */
+    section {
+        scroll-margin-top: 80px;
+    }
+`;
+document.head.appendChild(style);
+
+// Recalculate on window resize
+window.addEventListener('resize', fixHeroSectionPadding);
+
+
     </script>
 </body>
 </html>
